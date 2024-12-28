@@ -1,0 +1,25 @@
+{
+    "resume": {
+      "education": {
+        "title": "Education",
+        "content": "MS in Information Systems, Cornell University, Expected 2025"
+      },
+      "experience": {
+        "title": "Experience",
+        "content": "3+ years of experience in data engineering, machine learning, full-stack development, and UI/UX design. Led initiatives to resolve security vulnerabilities across AWS resources and implemented automation using Python and ETL tools like Informatica PowerCenter and Power BI."
+      },
+      "skills": {
+        "title": "Skills",
+        "content": ["Machine Learning", "Python", "Django", "Natural Language Processing (NLP)", "AWS", "Informatica PowerCenter", "Power BI", "Angular", "TypeScript", "React", "UX/UI Design", "Figma"]
+      },
+      "projects": {
+        "title": "Projects",
+        "content": ["NLP-based Automatic Domain Classification", "Virtual English Grammar Lab", "AI/ML blog platform", "Portfolio website"]
+      },
+      "interests": {
+        "title": "Interests",
+        "content": ["AI & Machine Learning", "Cloud Computing", "Data Engineering", "Technology", "Writing", "Photography", "Traveling"]
+      }
+    }
+  }
+  
