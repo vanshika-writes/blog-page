@@ -1,0 +1,221 @@
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* Ensure the text stays on a single line */
+#typingText {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  position: absolute;
+  left: 100%;
+  /* Initially placed off the right side of the button */
+  top: 0;
+  transform: translateX(10px);
+  /* Start slightly to the right */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Custom text selection color */
+::selection {
+  background-color: #6a1b9a;
+  /* Choose the color that matches your theme */
+  color: white;
+  /* Text color when highlighted */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2c1b56;
+  /* Match this with your theme color */
+  border-radius: 8px;
+  /* Rounded corners for the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+  /* Dark background color for the track */
+  border-radius: 10px;
+  /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  /* Hide the scrollbar buttons */
+}
+
+/* Author Section */
+.author-section {
+  min-height: 100vh;
+  /* Full-screen height */
+  display: flex;
+  flex-direction: column;
+  /* Default to column layout for smaller screens */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(45deg, #6a1b9a, #2c1b56);
+  /* Gradient background */
+}
+
+/* Profile Picture */
+.profile-picture {
+  width: 150px;
+  /* Adjust size for visibility */
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease-in-out;
+  /* Smooth zoom effect */
+}
+
+.profile-picture:hover {
+  transform: scale(1.1);
+  /* Zoom in slightly */
+}
+
+/* Author Information */
+.author-info {
+  text-align: center;
+  color: white;
+}
+
+.author-info h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.author-info p {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.author-info .bio {
+  font-size: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Resume Section Styling */
+.resume-section {
+  background: transparent;
+  color: #333;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+}
+
+.resume-section h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #6a1b9a;
+}
+
+.resume-section ul {
+  list-style: disc;
+  padding-left: 1rem;
+  margin-bottom: 20px;
+}
+
+.resume-section ul li {
+  margin-bottom: 8px;
+  color: #4a4a4a;
+}
+
+.resume-section a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #4f46e5;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.resume-section a:hover {
+  background-color: #ffffff;
+  color: #4f46e5;
+}
+
+/* Ensure the grid container always centers the content */
+.grid-container {
+  display: flex;
+  justify-content: center;
+  /* Centers the content horizontally */
+  align-items: center;
+  /* Centers the content vertically */
+  flex-wrap: wrap;
+  width: 100%;
+  /* Ensure full width */
+  margin: 0 auto;
+  /* Center the container horizontally */
+}
+
+/* Optional: Adjust the grid layout as per the number of cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* Auto-adjust grid based on available space */
+  gap: 16px;
+  /* Set gap between grid items */
+  justify-items: center;
+  /* Centers the items inside the grid */
+  width: 100%;
+  /* Full width of its parent container */
+}
+
+.grid>div {
+  max-width: 350px;
+  /* Optional: Set a max width for the cards to avoid them becoming too wide */
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .author-section {
+    text-align: center;
+    /* Center-align text */
+  }
+
+  .profile-picture {
+    margin-bottom: 16px;
+  }
+
+  .resume-section {
+    width: 100%;
+    /* Make resume section full-width */
+    margin-top: 30px;
+  }
+
+  .resume-section h4 {
+    font-size: 1.3rem;
+  }
+
+  .author-info h3 {
+    font-size: 2rem;
+  }
+
+  .author-info p {
+    font-size: 1rem;
+  }
+
+  .author-info .bio {
+    font-size: 0.9rem;
+    padding: 0 20px;
+  }
+}
