@@ -1,0 +1,77 @@
+{
+  "education": [
+    {
+      "institution": "Cornell University, New York, NY",
+      "date": "May 2026",
+      "degree": "Master of Science in Information Systems",
+      "coursework": [
+        "Machine Learning Engineering",
+        "Human-Computer Interaction",
+        "Algorithms and Data Structures",
+        "Psychological and Social Aspects of Tech"
+      ]
+    },
+    {
+      "institution": "Shri Ramdeobaba College of Engineering and Management, India",
+      "date": "May 2023",
+      "degree": "Bachelor of Engineering in Information Technology",
+      "coursework": ["Data Structures", "Operating Systems", "Database Management Systems"]
+    }
+  ],
+  "skills": {
+    "Coding Languages": [
+      "Python",
+      "SQL",
+      "C++",
+      "HTML/CSS",
+      "JavaScript",
+      "Java"
+    ],
+    "Libraries & Tools": [
+      "NumPy",
+      "Matplotlib",
+      "SciPy",
+      "Pandas",
+      "ETL",
+      "Power BI",
+      "AWS"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Engineer",
+      "company": "Principal Global Services",
+      "date": "Aug 2023 - Nov 2023",
+      "responsibilities": [
+        "Implemented AWS services for data processing and analysis, improving scalability of data workflows.",
+        "Enhanced IT system security, reducing vulnerabilities by 30%.",
+        "Utilized ETL tools and Power BI for seamless data processing and visualization."
+      ]
+    },
+    {
+      "role": "Summer Intern",
+      "company": "Loyal Corporate Consultants",
+      "date": "May 2023 - Aug 2023",
+      "responsibilities": [
+        "Developed responsive web pages using HTML, CSS, and JavaScript, enhancing user engagement.",
+        "Utilized Looker Studio and Excel for data analysis, improving business decision-making."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Automatic Domain Classification",
+      "description": "Collaborated on a team project to develop an NLP-based automatic domain classification system for text using TF-IDF and machine learning techniques."
+    },
+    {
+      "title": "Clause Simulator for English Lab",
+      "description": "Developed an algorithm for generating infinite sentences with complex clauses, implemented on OLab, an educational platform."
+    }
+  ],
+  "achievements": [
+    "Automatic Domain Classification of Text using Machine Learning (IEEE)",
+    "Fundus image classification for glaucoma using U-net architecture and logistic regression (IEEE)",
+    "Sentence Generator for English Language using Formal Semantics (IJNGC)",
+    "Freelanced as Shopify and Figma website designer, delivering customized e-commerce solutions and user-friendly interfaces"
+  ]
+}
