@@ -146,22 +146,43 @@ document.addEventListener('DOMContentLoaded', function () {
         experienceDetails.appendChild(div);
       });
 
-      // Projects data
       const projectsDetails = document.getElementById('projects-details');
-      data.projects.forEach(item => {
-        const div = document.createElement('div');
 
-        const h3 = document.createElement('h3');
-        h3.classList.add('text-2xl', 'font-semibold', 'text-yellow-300');
-        h3.textContent = item.title;
+      // Assuming `data` contains the projects field from your JSON data
+      if (data.projects && Array.isArray(data.projects)) {
+        data.projects.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('bg-gray-900', 'p-6', 'rounded-xl', 'hover:bg-purple-900/20', 'transition-all');
 
-        const p = document.createElement('p');
-        p.textContent = item.description;
+          // Title (h3)
+          const h3 = document.createElement('h3');
+          h3.classList.add('text-xl', 'font-semibold');
+          h3.textContent = item.title;
 
-        div.appendChild(h3);
-        div.appendChild(p);
-        projectsDetails.appendChild(div);
-      });
+          // Description (p)
+          const p = document.createElement('p');
+          p.classList.add('text-gray-400', 'mt-2');
+          p.textContent = item.description;
+
+          // Skill bubbles
+          const skillDiv = document.createElement('div');
+          skillDiv.classList.add('mt-4', 'flex', 'gap-2');
+          item.skills.forEach(skill => {
+            const skillBubble = document.createElement('span');
+            skillBubble.classList.add('skill-bubble');
+            skillBubble.textContent = skill;
+            skillDiv.appendChild(skillBubble);
+          });
+
+          // Append the elements to the div
+          div.appendChild(h3);
+          div.appendChild(p);
+          div.appendChild(skillDiv);
+
+          // Append the project card to the projects container
+          projectsDetails.appendChild(div);
+        });
+      }
 
       // Achievements data
       const achievementsList = document.getElementById('achievements-list');
