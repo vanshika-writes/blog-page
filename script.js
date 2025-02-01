@@ -5,37 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('data/authorData.json')
     .then(response => response.json())
     .then(data => {
-      const { name, title, description } = data.author;
+      const { name, title } = data.author;
       document.querySelector("#author-name").textContent = name;
       document.querySelector("#author-title").textContent = title;
-      document.querySelector("#author-description").textContent = description;
     })
     .catch(error => console.error("Error fetching author data:", error));
-
-  // Fetch and set resume data
-  fetch('data/resumeData.json')
-    .then(response => response.json())
-    .then(data => {
-      const resumeList = document.querySelector('#resume-list');
-      Object.values(data.resume).forEach(section => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('resume-section');
-
-        const title = document.createElement('div');
-        title.classList.add('text-lg', 'font-semibold', 'text-yellow-300');
-        title.textContent = section.title;
-
-        const content = document.createElement('div');
-        content.classList.add('text-base', 'text-[#d1c6ea]');
-        content.textContent = Array.isArray(section.content)
-          ? section.content.join(", ")
-          : section.content;
-
-        listItem.append(title, content);
-        resumeList.appendChild(listItem);
-      });
-    })
-    .catch(error => console.error("Error fetching resume data:", error));
 
   // Fetch and generate blog cards
   fetch('data/blogs.json')
@@ -76,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     })
     .catch(error => console.error("Error fetching blog data:", error));
-
 
   // Fetch data from the JSON file
   fetch('data/experienceContent.json')
@@ -148,20 +121,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Projects data
       const projectsDetails = document.getElementById('projects-details');
-      data.projects.forEach(item => {
-        const div = document.createElement('div');
+      if (data.projects && Array.isArray(data.projects)) {
+        data.projects.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('bg-gray-900', 'p-6', 'rounded-xl', 'hover:bg-purple-900/20', 'transition-all');
 
-        const h3 = document.createElement('h3');
-        h3.classList.add('text-2xl', 'font-semibold', 'text-yellow-300');
-        h3.textContent = item.title;
+          const h3 = document.createElement('h3');
+          h3.classList.add('text-xl', 'font-semibold');
+          h3.textContent = item.title;
 
-        const p = document.createElement('p');
-        p.textContent = item.description;
+          const p = document.createElement('p');
+          p.classList.add('text-gray-400', 'mt-2');
+          p.textContent = item.description;
 
-        div.appendChild(h3);
-        div.appendChild(p);
-        projectsDetails.appendChild(div);
-      });
+          const skillDiv = document.createElement('div');
+          skillDiv.classList.add('mt-4', 'flex', 'gap-2');
+          item.skills.forEach(skill => {
+            const skillBubble = document.createElement('span');
+            skillBubble.classList.add('skill-bubble');
+            skillBubble.textContent = skill;
+            skillDiv.appendChild(skillBubble);
+          });
+
+          div.appendChild(h3);
+          div.appendChild(p);
+          div.appendChild(skillDiv);
+
+          projectsDetails.appendChild(div);
+        });
+      }
 
       // Achievements data
       const achievementsList = document.getElementById('achievements-list');
@@ -174,10 +162,4 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => {
       console.error('Error fetching data:', error);
     });
-
-
-
-  // Play Lottie animation on page load
-  const lottiePlayer = document.getElementById('welcomeAnimation');
-  if (lottiePlayer) lottiePlayer.play();
 });

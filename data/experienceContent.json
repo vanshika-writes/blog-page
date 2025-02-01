@@ -61,11 +61,16 @@
   "projects": [
     {
       "title": "Automatic Domain Classification",
-      "description": "Collaborated on a team project to develop an NLP-based automatic domain classification system for text using TF-IDF and machine learning techniques."
+      "description": "Collaborated on a team project to develop an NLP-based automatic domain classification system for text using TF-IDF and machine learning techniques.",
+      "link": "blank",
+      "skills": ["Python", "Tenserflow"]
+
     },
     {
       "title": "Clause Simulator for English Lab",
-      "description": "Developed an algorithm for generating infinite sentences with complex clauses, implemented on OLab, an educational platform."
+      "description": "Developed an algorithm for generating infinite sentences with complex clauses, implemented on OLab, an educational platform.",
+      "link": "blank",
+      "skills": ["NLP", "PyTorch"]
     }
   ],
   "achievements": [
