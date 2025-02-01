@@ -1,165 +1,125 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log("Page loaded!");
 
-  // Fetch and set author data
-  fetch('data/authorData.json')
+  let knowledgeBase = [];
+
+  // Fetch the knowledge base from JSON
+  fetch('data/knowledge.json')
     .then(response => response.json())
     .then(data => {
-      const { name, title } = data.author;
-      document.querySelector("#author-name").textContent = name;
-      document.querySelector("#author-title").textContent = title;
+      knowledgeBase = data;
+      populateQuestionsDropdown(); // Populate dropdown after loading data
     })
-    .catch(error => console.error("Error fetching author data:", error));
+    .catch(error => console.error("Error loading knowledge base:", error));
 
-  // Fetch and generate blog cards
-  fetch('data/blogs.json')
-    .then(response => response.json())
-    .then(blogs => {
-      const container = document.getElementById("blogCardsContainer");
-      container.innerHTML = ''; // Clear previous content
+  // DOM Elements
+  const aiInput = document.getElementById('ai-input');
+  const aiSearch = document.getElementById('ai-search');
+  const aiClear = document.getElementById('ai-clear');
+  const aiQuestionsDropdown = document.getElementById('ai-questions-dropdown');
+  const aiQuestionsList = document.getElementById('ai-questions-list');
+  const aiResponse = document.getElementById('ai-response');
+  const aiAnswer = document.getElementById('ai-answer');
 
-      blogs.forEach(blog => {
-        const cardLink = document.createElement("a");
-        cardLink.href = blog.link;
-        cardLink.target = "_blank";
-        cardLink.classList.add("block", "relative");
+  let typingInterval = null;
+  let currentAnimationFrame = null;
 
-        const blogCard = document.createElement("div");
-        blogCard.classList.add(
-          "bg-gradient-to-r", "from-purple-800", "to-purple-700", "p-6",
-          "rounded-lg", "shadow-xl", "transform", "transition", "duration-500",
-          "hover:scale-105", "cursor-pointer", "relative"
-        );
+  function handleInputChange() {
+    const hasText = aiInput.value.trim() !== '';
+    aiClear.style.opacity = hasText ? '1' : '0';
+    aiClear.style.visibility = hasText ? 'visible' : 'hidden';
+  }
 
-        const blogTitle = document.createElement("h3");
-        blogTitle.classList.add("text-2xl", "font-extrabold", "text-white", "mb-4");
-        blogTitle.textContent = blog.title;
+  handleInputChange();
 
-        const blogDescription = document.createElement("p");
-        blogDescription.classList.add("text-gray-200", "text-lg", "mb-6");
-        blogDescription.textContent = blog.description;
+  aiInput.addEventListener('input', function () {
+    handleInputChange();
+    if (this.value.trim() === '') {
+      aiResponse.classList.add('hidden');
+    }
+  });
 
-        const readMoreLink = document.createElement("a");
-        readMoreLink.classList.add("absolute", "bottom-4", "left-6", "text-yellow-300", "text-xl", "font-semibold", "hover:underline");
-        readMoreLink.href = blog.link;
-        readMoreLink.textContent = "Read More";
+  aiInput.addEventListener('focus', function () {
+    aiQuestionsDropdown.classList.remove('hidden');
+    populateQuestionsDropdown();
+  });
 
-        blogCard.append(blogTitle, blogDescription, readMoreLink);
-        cardLink.appendChild(blogCard);
-        container.appendChild(cardLink);
+  document.addEventListener('click', function (event) {
+    const isInput = event.target === aiInput;
+    const isDropdown = aiQuestionsDropdown.contains(event.target);
+    const isSearchButton = event.target === aiSearch || aiSearch.contains(event.target);
+    const isClearButton = event.target === aiClear || aiClear.contains(event.target);
+
+    if (!isInput && !isDropdown && !isSearchButton && !isClearButton) {
+      aiQuestionsDropdown.classList.add('hidden');
+    }
+  });
+
+  function populateQuestionsDropdown() {
+    aiQuestionsList.innerHTML = '';
+    knowledgeBase.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer text-gray-300';
+      li.textContent = item.question;
+      li.addEventListener('click', function () {
+        aiInput.value = item.question;
+        aiQuestionsDropdown.classList.add('hidden');
+        handleInputChange();
+        showAnswer(item.answer);
       });
-    })
-    .catch(error => console.error("Error fetching blog data:", error));
-
-  // Fetch data from the JSON file
-  fetch('data/experienceContent.json')
-    .then(response => response.json())
-    .then(data => {
-      // Education data
-      const educationDetails = document.getElementById('education-details');
-      data.education.forEach(item => {
-        const div = document.createElement('div');
-
-        const h3 = document.createElement('h3');
-        h3.classList.add('font-semibold', 'text-xl', 'text-yellow-300');
-        h3.textContent = `${item.institution} | ${item.date}`;
-
-        const p1 = document.createElement('p');
-        p1.textContent = item.degree;
-
-        const p2 = document.createElement('p');
-        p2.classList.add('text-gray-200');
-        p2.textContent = `Relevant Coursework: ${item.coursework.join(', ')}`;
-
-        div.appendChild(h3);
-        div.appendChild(p1);
-        div.appendChild(p2);
-        educationDetails.appendChild(div);
-      });
-
-      // Technical Skills data
-      const skillsDetails = document.getElementById('skills-details');
-      Object.keys(data.skills).forEach(category => {
-        const div = document.createElement('div');
-
-        const h3 = document.createElement('h3');
-        h3.classList.add('font-semibold', 'text-xl', 'text-yellow-300');
-        h3.textContent = category;
-
-        const ul = document.createElement('ul');
-        data.skills[category].forEach(skill => {
-          const li = document.createElement('li');
-          li.textContent = skill;
-          ul.appendChild(li);
-        });
-
-        div.appendChild(h3);
-        div.appendChild(ul);
-        skillsDetails.appendChild(div);
-      });
-
-      // Experience data
-      const experienceDetails = document.getElementById('experience-details');
-      data.experience.forEach(item => {
-        const div = document.createElement('div');
-
-        const h3 = document.createElement('h3');
-        h3.classList.add('text-2xl', 'font-semibold', 'text-yellow-300');
-        h3.textContent = `${item.role}, ${item.company} | ${item.date}`;
-
-        const ul = document.createElement('ul');
-        item.responsibilities.forEach(responsibility => {
-          const li = document.createElement('li');
-          li.textContent = responsibility;
-          ul.appendChild(li);
-        });
-
-        div.appendChild(h3);
-        div.appendChild(ul);
-        experienceDetails.appendChild(div);
-      });
-
-      // Projects data
-      const projectsDetails = document.getElementById('projects-details');
-      if (data.projects && Array.isArray(data.projects)) {
-        data.projects.forEach(item => {
-          const div = document.createElement('div');
-          div.classList.add('bg-gray-900', 'p-6', 'rounded-xl', 'hover:bg-purple-900/20', 'transition-all');
-
-          const h3 = document.createElement('h3');
-          h3.classList.add('text-xl', 'font-semibold');
-          h3.textContent = item.title;
-
-          const p = document.createElement('p');
-          p.classList.add('text-gray-400', 'mt-2');
-          p.textContent = item.description;
-
-          const skillDiv = document.createElement('div');
-          skillDiv.classList.add('mt-4', 'flex', 'gap-2');
-          item.skills.forEach(skill => {
-            const skillBubble = document.createElement('span');
-            skillBubble.classList.add('skill-bubble');
-            skillBubble.textContent = skill;
-            skillDiv.appendChild(skillBubble);
-          });
-
-          div.appendChild(h3);
-          div.appendChild(p);
-          div.appendChild(skillDiv);
-
-          projectsDetails.appendChild(div);
-        });
-      }
-
-      // Achievements data
-      const achievementsList = document.getElementById('achievements-list');
-      data.achievements.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        achievementsList.appendChild(li);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
+      aiQuestionsList.appendChild(li);
     });
+  }
+
+  function showAnswer(answer) {
+    if (typingInterval) clearInterval(typingInterval);
+    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+
+    aiAnswer.textContent = '';
+    aiResponse.classList.remove('hidden');
+
+    let index = 0;
+    const typingSpeed = 30;
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor-blink';
+    cursor.textContent = '|';
+
+    aiAnswer.appendChild(cursor);
+
+    function typeCharacter() {
+      if (index < answer.length) {
+        aiAnswer.textContent = answer.substring(0, index + 1);
+        aiAnswer.appendChild(cursor);
+        index++;
+        currentAnimationFrame = requestAnimationFrame(() => {
+          typingInterval = setTimeout(typeCharacter, typingSpeed);
+        });
+      } else {
+        cursor.remove();
+      }
+    }
+
+    typeCharacter();
+  }
+
+  aiClear.addEventListener('click', function () {
+    aiInput.value = '';
+    aiResponse.classList.add('hidden');
+    if (typingInterval) clearInterval(typingInterval);
+    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+    handleInputChange();
+  });
+
+  aiSearch.addEventListener('click', function () {
+    const query = aiInput.value.trim().toLowerCase();
+    const matchedQuestion = knowledgeBase.find(item =>
+      item.question.toLowerCase().includes(query)
+    );
+
+    if (matchedQuestion) {
+      showAnswer(matchedQuestion.answer);
+    } else {
+      showAnswer("Sorry, I couldn't find an answer to that question. Try selecting a question from the dropdown!");
+    }
+  });
 });

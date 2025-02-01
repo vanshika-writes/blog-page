@@ -34,3 +34,66 @@
   color: #ffffff; /* hover:text-white */
   transform: scale(1.05); /* hover:scale-105 */
 }
+
+/* AI Assistant Styles */
+#ai-input::placeholder {
+  color: #6b7280;
+}
+
+#ai-response {
+  transition: all 0.3s ease;
+}
+
+#ai-answer {
+  white-space: pre-wrap; /* Preserve line breaks in AI response */
+}
+
+#ai-clear {
+  transition: all 0.2s ease-in-out;
+  right: 3.5rem; /* Match this with the right-14 utility */
+  z-index: 10;
+}
+
+#ai-search {
+  z-index: 10;
+}
+
+#ai-input:not(:placeholder-shown) + #ai-clear {
+  opacity: 1;
+}
+
+/* Predefined Questions */
+button.text-purple-400:hover {
+  color: #d946ef; /* Slightly brighter purple on hover */
+}
+
+/* Custom scrollbar for dropdown */
+#ai-questions-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#ai-questions-list::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+#ai-questions-list::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+#ai-questions-list::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+.cursor-blink {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  color: #9CA3AF;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1 }
+  50% { opacity: 0 }
+}
+
